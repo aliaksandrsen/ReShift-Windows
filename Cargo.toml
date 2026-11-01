@@ -1,0 +1,25 @@
+[workspace]
+members = ["crates/core", "crates/app"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+authors = ["ReShift Contributors"]
+publish = false
+
+[workspace.lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+
+[workspace.lints.clippy]
+# A tray utility must survive anything: no panicking shortcuts outside tests (see clippy.toml)
+unwrap_used = "deny"
+expect_used = "deny"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+# Panics are caught (catch_unwind) in the conversion pipeline and in Win32 callbacks
+panic = "unwind"
